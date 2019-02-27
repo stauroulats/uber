@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "900633716548",
+    "firebase_url": "https://uber-62216.firebaseio.com",
+    "project_id": "uber-62216",
+    "storage_bucket": "uber-62216.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900633716548:android:92437fe05cce88c2",
+        "android_client_info": {
+          "package_name": "com.example.stavroula.uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900633716548-thp2385v6s5v7nboc0ga5nvnai1sc5fr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stavroula.uber",
+            "certificate_hash": "24bc1a7d22fcedf3f069e1af08298060314271d7"
+          }
+        },
+        {
+          "client_id": "900633716548-a7sijbd0u9gauvlfpvsk61dr0bb28bea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFqboSRVNAqk7GpgbAzVid54DR-jZzlSc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900633716548-a7sijbd0u9gauvlfpvsk61dr0bb28bea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

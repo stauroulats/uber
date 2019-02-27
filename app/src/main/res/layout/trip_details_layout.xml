@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/first_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+
+        <ImageButton
+            android:id="@+id/return_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:background="@null"
+            android:src="@drawable/ic_arrow_back"
+            />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fontFamily="@font/quicksand_regular"
+            android:text="@string/trip_details"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="28sp" />
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:src="@drawable/map"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/date_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:src="@drawable/ic_calendar" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            app:fontFamily="@font/quicksand_regular"
+            android:text="@string/date"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <View android:id="@+id/dividor1"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_blue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/start_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:src="@drawable/ic_pick_up_point" />
+
+        <TextView
+            android:id="@+id/pick_up_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            app:fontFamily="@font/quicksand_regular"
+            android:hint="@string/pick_up_point"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/destination_line_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:src="@drawable/ic_more_vert" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/destination_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:src="@drawable/ic_destination_place" />
+
+            <TextView
+                android:id="@+id/destination_point"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/destination_point"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View android:id="@+id/dividor2"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_blue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="5dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/ride_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/ride_distance"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ride_distance_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/value"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/time_taken"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/time_taken"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/time_taken_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/value"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            android:gravity="center"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/wait_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/wait_time"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/wait_time_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:fontFamily="@font/quicksand_regular"
+                android:hint="@string/value"
+                android:textAlignment="center"
+                android:textColor="@color/blue"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View android:id="@+id/dividor3"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
+        android:background="@color/light_blue" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fare_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            app:fontFamily="@font/quicksand_regular"
+            android:hint="@string/fare_amount"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/fare_amount_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            app:fontFamily="@font/quicksand_regular"
+            android:hint="@string/value"
+            android:gravity="right"
+            android:textAlignment="gravity"
+            android:textColor="@color/blue"
+            android:textSize="14sp"
+             />
+
+        <TextView
+            android:id="@+id/mresponse"
+            android:layout_marginTop="35dp"
+            android:visibility = "gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
+
+

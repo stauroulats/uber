@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/return_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:src="@drawable/ic_arrow_back"
+        />
+
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:src="@drawable/ic_close"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Thank you for Riding Uber"
+        android:fontFamily="@font/quicksand_regular"
+        android:textSize="26dp"/>
+
+    <TextView
+        android:id="@+id/rate_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:text="Rate Me"
+        android:textSize="18dp"/>
+
+    <RatingBar
+        android:layout_below="@+id/rate_me"
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:stepSize="1.0" />
+
+
+    <View android:id="@+id/dividor"
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/second_layout"
+        android:layout_marginTop="20dp"
+        android:background="@color/light_blue" />
+
+    <TextView
+        android:id="@+id/feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:text="Leave Feedback"
+        android:textSize="18dp"/>
+
+    <EditText
+        android:id="@+id/rating_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lines="10"
+        android:minLines="5"
+        android:gravity="top|start"
+        android:maxLines="15"
+        android:hint="Please leave a comment \n Your feedback is appreciated"
+        android:inputType="textMultiLine"/>
+
+
+    <Button
+        android:layout_below="@+id/submit"
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@color/light_blue"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Submit"
+        android:textAlignment="center"
+        android:textColor="@color/blue_black"
+        android:textSize="14sp"/>
+
+</LinearLayout>

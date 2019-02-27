@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">U B E R</string>
+    <string name="welcome">Welcome</string>
+    <string name="rider">Rider</string>
+    <string name="driver">Driver</string>
+    <string name="login_rbutton">LOG IN AS A RIDER</string>
+    <string name="login_dbutton">LOG IN AS A DRIVER</string>
+    <string name="sign_up_rbutton">SIGN UP AS A RIDER</string>
+    <string name="sign_up_dbutton">SIGN UP AS A DRIVER</string>
+    <string name="create_account">Sign Up To Ride</string>
+    <string name="create_drv_account">Sign Up to Drive</string>
+    <string name="next_btn">Next</string>
+    <string name="create_car">Create New Car</string>
+    <string name="personal_info">Personal Info</string>
+    <string name="car_info">Car Info</string>
+    <string name="login">LOG IN</string>
+    <string name="need_an_account">Need an account?</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="have_an_account">Already have an account?</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="phone">Phone</string>
+    <string name="Address">Address</string>
+    <string name="submit_button">SUBMIT</string>
+
+    <string name="address">Where to?</string>
+
+    <!--Appointment strings -->
+    <string name="schedule_trip">Schedule New Trip</string>
+    <string name="schedule_btn">Schedule Ride</string>
+    <string name="pickUp_date">PickUp Date</string>
+    <string name="pickUp_time">PickUp Time</string>
+    <string name="pickUp_location">PickUp Location</string>
+    <string name="destination">Enter your destination</string>
+    <string name="fare">Fare Estimated</string>
+
+    <!--Vehicles strings -->
+    <string name="vehicle">Vehicles</string>
+    <string name="new_car">Add A Car</string>
+    <string name="add_car">Add New Car</string>
+    <string name="manufacture">Manufacture</string>
+    <string name="model">Model</string>
+    <string name="year">Year</string>
+    <string name="registrationPlate">Registration Plate</string>
+    <string name="color">Color</string>
+    <string name="save">Save</string>
+
+    <!-- Credit Card strings -->
+    <string name="credit_cards">Credit Cards</string>
+    <string name="new_credit_card">Add A Credit Card</string>
+    <string name="add_credit_card">Add New Credit Card</string>
+    <string name="card_number">Card Number</string>
+    <string name="name">CardHolder Name</string>
+    <string name="cvv">CVV</string>
+    <string name="month">Month</string>
+
+    <!--Puw request uber Strings -->
+    <string name="Estimated_fare">Estimated Fare: </string>
+    <string name="dollar">$14</string>
+    <string name="request_uber">Request Uber</string>
+
+    <!--Navigation Rider View Stings -->
+    <string name="payment">Payment</string>
+    <string name="history">History</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
+    
+    <string name="open_nav_menu">nav_drawer_open</string>
+    <string name="close_nav_menu">nav_drawer_close</string>
+
+    <!--Profile-->
+    <string name="my_profile">My Profile</string>
+    <string name="gender">Select Gender</string>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+    <string name="my_address">Address</string>
+    <string name="country">Country</string>
+    <string name="zip_code">Zip Code</string>
+
+    <!--Trip History-->
+    <string name="trip_history">Trip History</string>
+    <string name="my_trips">My Trips</string>
+
+    <!--Trip Details-->
+    <string name="trip_details">Trip Details</string>
+    <string name="date">Date</string>
+    <string name="pick_up_point">Pick Up Point</string>
+    <string name="destination_point">Destination Point</string>
+    <string name="ride_distance">Ride Distance</string>
+    <string name="time_taken">Time taken</string>
+    <string name="wait_time">Wait Time</string>
+    <string name="fare_amount">Fare Amount</string>
+    <string name="value">Value</string>
+    
+    <!--End Trip-->
+    <string name="end_trip">End Trip</string>
+    <string name="credit_card">Credit Card</string>
+    <string name="cash">Cash</string>
+
+    <!--Complete payment-->
+    <string name="complete_payment">Your payment is complete</string>
+    <string name="ok">OK</string>
+    
+    <!--Change Password-->
+    <string name="change_password">CHANGE PASSWORD</string>
+    <string name="new_password">Enter New Password</string>
+    <string name="retype_password">Retype New Password</string>
+    <string name="bchange_password">Change Password</string>
+
+    <!--Driver Trip History-->
+    <string name="total_trips">Total Trips</string>
+    <string name="km">Km</string>
+    <string name="earnings">Earnings</string>
+    <string name="week_statistics">Statistics per week</string>
+    <string name="month_statistics">Statistics per month</string>
+
+    <!--Welcome Driver-->
+    <string name="select_car">Please Select A Car</string>
+
+    <string-array name="countries_array">
+        <item>Afghanistan</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>American Samoa</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Anguilla</item>
+        <item>Antarctica</item>
+        <item>Antigua and Barbuda</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Aruba</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Azerbaijan</item>
+        <item>Bahamas</item>
+        <item>Bahrain</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belarus</item>
+        <item>Belgium</item>
+        <item>Belize</item>
+        <item>Benin</item>
+        <item>Bermuda</item>
+        <item>Bhutan</item>
+        <item>Bolivia</item>
+        <item>Bosnia and Herzegovina</item>
+        <item>Botswana</item>
+        <item>Brazil</item>
+        <item>British Indian Ocean Territory</item>
+        <item>British Virgin Islands</item>
+        <item>Brunei</item>
+        <item>Bulgaria</item>
+        <item>Burkina Faso</item>
+        <item>Burundi</item>
+        <item>Cambodia</item>
+        <item>Cameroon</item>
+        <item>Canada</item>
+        <item>Cape Verde</item>
+        <item>Cayman Islands</item>
+        <item>Central African Republic</item>
+        <item>Chad</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Christmas Island</item>
+        <item>Cocos Islands</item>
+        <item>Colombia</item>
+        <item>Comoros</item>
+        <item>Cook Islands</item>
+        <item>Costa Rica</item>
+        <item>Croatia</item>
+        <item>Cuba</item>
+        <item>Cyprus</item>
+        <item>Czech Republic</item>
+        <item>Democratic Republic of the Congo</item>
+        <item>Denmark</item>
+        <item>Djibouti</item>
+        <item>Dominica</item>
+        <item>Dominican Republic</item>
+        <item>East Timor</item>
+        <item>Ecuador</item>
+        <item>Egypt</item>
+        <item>El Salvador</item>
+        <item>Equatorial Guinea</item>
+        <item>Eritrea</item>
+        <item>Estonia</item>
+        <item>Ethiopia</item>
+        <item>Falkland Islands</item>
+        <item>Faroe Islands</item>
+        <item>Fiji</item>
+        <item>Finland</item>
+        <item>France</item>
+        <item>French Polynesia</item>
+        <item>Gabon</item>
+        <item>Gambia</item>
+        <item>Georgia</item>
+        <item>Germany</item>
+        <item>Ghana</item>
+        <item>Gibraltar</item>
+        <item>Greece</item>
+        <item>Greenland</item>
+        <item>Grenada</item>
+        <item>Guam</item>
+        <item>Guatemala</item>
+        <item>Guinea</item>
+        <item>Guinea-Bissau</item>
+        <item>Guyana</item>
+        <item>Haiti</item>
+        <item>Honduras</item>
+        <item>Hong Kong</item>
+        <item>Hungary</item>
+        <item>Iceland</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Iran</item>
+        <item>Iraq</item>
+        <item>Ireland</item>
+        <item>Isle of Man</item>
+        <item>Israel</item>
+        <item>Italy</item>
+        <item>Ivory Coast</item>
+        <item>Jamaica</item>
+        <item>Japan</item>
+        <item>Jersey</item>
+        <item>Jordan</item>
+        <item>Kazakhstan</item>
+        <item>Kenya</item>
+        <item>Kiribati</item>
+        <item>Kuwait</item>
+        <item>Kyrgyzstan</item>
+        <item>Laos</item>
+        <item>Latvia</item>
+        <item>Lebanon</item>
+        <item>Lesotho</item>
+        <item>Liberia</item>
+        <item>Libya</item>
+        <item>Liechtenstein</item>
+        <item>Lithuania</item>
+        <item>Luxembourg</item>
+        <item>Macao</item>
+        <item>Macedonia</item>
+        <item>Madagascar</item>
+        <item>Malawi</item>
+        <item>Malaysia</item>
+        <item>Maldives</item>
+        <item>Mali</item>
+        <item>Malta</item>
+        <item>Marshall Islands</item>
+        <item>Mauritania</item>
+        <item>Mauritius</item>
+        <item>Mayotte</item>
+        <item>Mexico</item>
+        <item>Micronesia</item>
+        <item>Moldova</item>
+        <item>Monaco</item>
+        <item>Mongolia</item>
+        <item>Montenegro</item>
+        <item>Montserrat</item>
+        <item>Morocco</item>
+        <item>Mozambique</item>
+        <item>Myanmar</item>
+        <item>Namibia</item>
+        <item>Nauru</item>
+        <item>Nepal</item>
+        <item>Netherlands</item>
+        <item>Netherlands Antilles</item>
+        <item>New Caledonia</item>
+        <item>New Zealand</item>
+        <item>Nicaragua</item>
+        <item>Niger</item>
+        <item>Nigeria</item>
+        <item>Niue</item>
+        <item>North Korea</item>
+        <item>Northern Mariana Islands</item>
+        <item>Norway</item>
+        <item>Oman</item>
+        <item>Pakistan</item>
+        <item>Palau</item>
+        <item>Panama</item>
+        <item>Papua New Guinea</item>
+        <item>Paraguay</item>
+        <item>Peru</item>
+        <item>Philippines</item>
+        <item>Pitcairn</item>
+        <item>Poland</item>
+        <item>Portugal</item>
+        <item>Puerto Rico</item>
+        <item>Qatar</item>
+        <item>Republic of the Congo</item>
+        <item>Romania</item>
+        <item>Russia</item>
+        <item>Rwanda</item>
+        <item>Saint Barthelemy</item>
+        <item>Saint Helena</item>
+        <item>Saint Kitts and Nevis</item>
+        <item>Saint Lucia</item>
+        <item>Saint Martin</item>
+        <item>Saint Pierre and Miquelon</item>
+        <item>Saint Vincent and the Grenadines</item>
+        <item>Samoa</item>
+        <item>San Marino</item>
+        <item>Sao Tome and Principe</item>
+        <item>Saudi Arabia</item>
+        <item>Senegal</item>
+        <item>Serbia</item>
+        <item>Seychelles</item>
+        <item>Sierra Leone</item>
+        <item>Singapore</item>
+        <item>Slovakia</item>
+        <item>Slovenia</item>
+        <item>Solomon Islands</item>
+        <item>Somalia</item>
+        <item>South Africa</item>
+        <item>South Georgia and the South Sandwich Islands</item>
+        <item>South Korea</item>
+        <item>Spain</item>
+        <item>Sri Lanka</item>
+        <item>Sudan</item>
+        <item>Suriname</item>
+        <item>Svalbard and Jan Mayen</item>
+        <item>Swaziland</item>
+        <item>Sweden</item>
+        <item>Switzerland</item>
+        <item>Syria</item>
+        <item>Taiwan</item>
+        <item>Tajikistan</item>
+        <item>Tanzania</item>
+        <item>Thailand</item>
+        <item>Togo</item>
+        <item>Tokelau</item>
+        <item>Tonga</item>
+        <item>Trinidad and Tobago</item>
+        <item>Tunisia</item>
+        <item>Turkey</item>
+        <item>Turkmenistan</item>
+        <item>Turks and Caicos Islands</item>
+        <item>Tuvalu</item>
+        <item>U.S. Virgin Islands</item>
+        <item>Uganda</item>
+        <item>Ukraine</item>
+        <item>United Arab Emirates</item>
+        <item>United Kingdom</item>
+        <item>United States</item>
+        <item>Uruguay</item>
+        <item>Uzbekistan</item>
+        <item>Vanuatu</item>
+        <item>Vatican</item>
+        <item>Venezuela</item>
+        <item>Vietnam</item>
+        <item>Wallis and Futuna</item>
+        <item>Western Sahara</item>
+        <item>Yemen</item>
+        <item>Zambia</item>
+        <item>Zimbabwe</item>
+    </string-array>
+
+    <string-array name="choose_user">
+        <item>RIDER</item>
+        <item>DRIVER</item>
+    </string-array>
+
+    <string-array name="choose_method">
+        <item>LOGIN</item>
+        <item>REGISTER</item>
+    </string-array>
+    <string name="title_activity_rider_maps">Map</string>
+
+</resources>

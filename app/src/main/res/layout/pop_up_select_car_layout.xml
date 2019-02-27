@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pop_up_window"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#ffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right"
+            android:background="@drawable/close"
+            />
+
+        <TextView
+            android:id="@+id/select_car"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_car"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:fontFamily="@font/walkway_semibold"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:padding="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="5dp"
+            />
+
+
+        <View
+            android:layout_height="2dp"
+            android:layout_width="260dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/blue" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+
+        </RadioGroup>
+
+            <Button
+                android:id="@+id/cash_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:text="@string/ok"
+                app:fontFamily="@font/quicksand_regular"
+                android:textColor="@color/light_blue"
+                android:background="@drawable/button_submit"
+                />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

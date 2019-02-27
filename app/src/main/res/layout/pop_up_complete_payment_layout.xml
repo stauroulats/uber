@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pop_up_window"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#ffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right"
+            android:background="@drawable/close"
+            />
+
+        <ImageView
+            android:id="@+id/complete_payment_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_trip"
+            android:background="@drawable/ic_done"
+            />
+
+        <TextView
+            android:id="@+id/fare_amount_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dollar"
+            android:textSize="30dp"
+            android:textAlignment="center"
+            app:fontFamily="@font/roboto_regular"
+            android:padding="5dp"
+            />
+
+        <TextView
+            android:id="@+id/complete_payment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/complete_payment"
+            android:textSize="16dp"
+            android:textAlignment="center"
+            app:fontFamily="@font/walkway"
+            android:padding="5dp"
+            />
+
+
+        <View
+            android:layout_height="2dp"
+            android:layout_width="260dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/blue" />
+
+
+            <Button
+                android:id="@+id/ok_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:textSize="12sp"
+                android:text="@string/ok"
+                app:fontFamily="@font/quicksand_regular"
+                android:textColor="@color/light_blue"
+                android:background="@drawable/button_submit"
+                />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

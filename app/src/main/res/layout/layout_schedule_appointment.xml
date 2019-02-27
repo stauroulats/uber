@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".TripSchedule">
+
+    <LinearLayout
+        android:id="@+id/firstLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/return_back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_arrow_back"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/quicksand_regular"
+            android:text="@string/schedule_trip"
+            android:textAlignment="center"
+            android:textColor="@color/blue"
+            android:textSize="20sp" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp">
+
+            <LinearLayout
+                android:id="@+id/first_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/pickUp_date_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginRight="2dp"
+                        android:background="@color/light_blue"
+                        android:fontFamily="@font/quicksand_regular"
+                        android:text="@string/pickUp_date"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue_black"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:id="@+id/pickUp_time_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="2dp"
+                        android:background="@color/light_blue"
+                        android:fontFamily="@font/quicksand_regular"
+                        android:text="@string/pickUp_time"
+                        android:textAlignment="center"
+                        android:textColor="@color/blue_black"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_blue" />
+
+                <EditText
+                    android:id="@+id/pickUp_location_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="@string/pickUp_location"
+                    android:padding="12dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_blue" />
+
+                <EditText
+                    android:id="@+id/destination_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="@string/destination"
+                    android:padding="12dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/light_blue" />
+<!--
+                <fragment
+                    android:id="@+id/map"
+                    class="com.google.android.gms.maps.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    />
+-->
+                <Button
+                    android:id="@+id/schedule_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:background="@color/light_blue"
+                    android:fontFamily="@font/quicksand_regular"
+                    android:text="@string/schedule_btn"
+                    android:textAlignment="center"
+                    android:textColor="@color/blue_black"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pop_up_window"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#ffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_gravity="right"
+            android:background="@drawable/close"
+             />
+
+    <TextView
+        android:id="@+id/end_trip_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_trip"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:fontFamily="@font/walkway_semibold"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        />
+
+        <TextView
+            android:id="@+id/fare_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fare_amount"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            app:fontFamily="@font/roboto_regular"
+            android:layout_centerInParent="true"
+            android:padding="5dp"
+            />
+
+    <TextView
+        android:id="@+id/fare_amount_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dollar"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        app:fontFamily="@font/roboto_regular"
+        android:layout_centerInParent="true"
+        android:padding="5dp"
+        />
+
+
+    <View
+        android:layout_height="2dp"
+        android:layout_width="260dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/blue" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/credit_card_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        android:textSize="12sp"
+        android:text="@string/credit_card"
+        app:fontFamily="@font/quicksand_regular"
+        android:textColor="@color/light_blue"
+        android:background="@drawable/button_submit"
+        />
+
+    <Button
+        android:id="@+id/cash_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginLeft="10dp"
+        android:padding="5dp"
+        android:textSize="12sp"
+        android:text="@string/cash"
+        app:fontFamily="@font/quicksand_regular"
+        android:textColor="@color/light_blue"
+        android:background="@drawable/button_submit"
+        />
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
