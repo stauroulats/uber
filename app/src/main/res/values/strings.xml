@@ -82,7 +82,7 @@
         <item>Female</item>
     </string-array>
     <string name="my_address">Address</string>
-    <string name="country">Country</string>
+    <string name="country">Select Country</string>
     <string name="zip_code">Zip Code</string>
 
     <!--Trip History-->

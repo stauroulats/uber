@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pop_up_window"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
+    android:background="#ffff"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Estimated_fare"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:fontFamily="@font/walkway_semibold"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/estimated_fare_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/value"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_centerInParent="true"
+        android:padding="10dp"
+        android:layout_below="@+id/text"
+        />
+
+    <ImageButton
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/text"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/close"
+        android:layout_toEndOf="@+id/text" />
+
+    <View
+        android:layout_height="2dp"
+        android:layout_width="260dp"
+        android:layout_marginTop="20dp"
+        android:layout_above="@id/schedule_btn"
+        android:background="@color/blue" />
+
+    <Button
+        android:id="@+id/schedule_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/estimated_fare_txt"
+        android:layout_marginTop="5dp"
+        android:background="@color/light_blue"
+        android:fontFamily="@font/quicksand_regular"
+        android:text="@string/schedule_btn"
+        android:textAlignment="center"
+        android:textColor="@color/blue_black"
+        android:textSize="14sp"
+        />
+
+</RelativeLayout>

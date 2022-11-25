@@ -1,8 +1,6 @@
 package com.example.stavroula.uber;
 
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +11,8 @@ import android.widget.Toast;
 import com.example.stavroula.uber.entity.CreditCard;
 import com.example.stavroula.uber.network.RetrofitClient;
 import com.example.stavroula.uber.service.ApiService;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -67,9 +67,13 @@ public class CreateCardActivity extends MainActivity {
                 Long card_number = Long.parseLong(edt_card_number.getText().toString());
                 Log.wtf("123", "card_number"+card_number);
                 String cardholder_name = edt_cardholder_name.getText().toString();
+                Log.wtf("123", "card_name"+cardholder_name);
                 Integer cvv = Integer.parseInt(edt_cvv.getText().toString());
+                Log.wtf("123", "cvv"+cvv);
                 Integer year = Integer.parseInt(edt_year.getText().toString());
+                Log.wtf("123", "year"+year);
                 Integer month = Integer.parseInt(edt_month.getText().toString());
+                Log.wtf("123", "month"+month);
 
                 CreditCard creditCard = new CreditCard();
                 creditCard.setNumber(card_number);
@@ -77,7 +81,7 @@ public class CreateCardActivity extends MainActivity {
                 creditCard.setCvv(cvv);
                 creditCard.setYear(year);
                 creditCard.setMonth(month);
-
+                Log.wtf("123", "card"+creditCard.getName()+creditCard.getCvv()+creditCard.getNumber()+creditCard.getMonth()+creditCard.getYear());
                 createCreditCard(creditCard);
             }
         });
@@ -104,11 +108,13 @@ public class CreateCardActivity extends MainActivity {
                    Log.d("123", "response"+response.body().toString());
                    Log.d("123", "post submitted to API." + response.body().toString());
                }
+
            }
 
            @Override
            public void onFailure(Call<CreditCard> call, Throwable t) {
                Log.d("123", "Unable to submit post to API.");
+               t.printStackTrace();
            }
        });
 

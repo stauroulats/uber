@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:background="#ffff"
+    android:background="@drawable/pop_up_shape"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,16 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
-
-        <ImageButton
-            android:id="@+id/close_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_gravity="right"
-            android:background="@drawable/close"
-             />
 
     <TextView
         android:id="@+id/end_trip_txt"
@@ -65,14 +55,14 @@
         />
 
 
-    <View
-        android:layout_height="2dp"
-        android:layout_width="260dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/blue" />
+        <View
+            android:layout_height="2dp"
+            android:layout_width="260dp"
+            android:layout_marginTop="5dp"
+            android:background="#F2F2F2" />
 
 
-    <LinearLayout
+        <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"

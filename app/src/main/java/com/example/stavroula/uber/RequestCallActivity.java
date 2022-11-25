@@ -2,12 +2,13 @@ package com.example.stavroula.uber;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.stavroula.uber.entity.TripRequest;
 import com.example.stavroula.uber.network.RetrofitClient;
@@ -141,7 +142,7 @@ public class RequestCallActivity extends MainActivity {
         Log.wtf("123", "apiservice" + apiService.toString());
 
         //TODO id driver
-        Call<Long> call = apiService.getDriverDataNotification(Long.valueOf(8), tripRequestId);
+        Call<Long> call = apiService.getDriverDataNotification(Long.valueOf(7), tripRequestId);
         Log.wtf("123", "call" + call.request().toString());
         call.enqueue(new Callback<Long>() {
             @Override

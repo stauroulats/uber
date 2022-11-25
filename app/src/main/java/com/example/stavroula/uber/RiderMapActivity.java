@@ -17,18 +17,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -44,6 +32,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.example.stavroula.uber.entity.TripRequest;
 import com.example.stavroula.uber.entity.TripRequestData;
 import com.example.stavroula.uber.network.RetrofitClient;
@@ -51,10 +51,6 @@ import com.example.stavroula.uber.service.ApiService;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -62,6 +58,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.JointType;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -72,6 +70,12 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.SquareCap;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -82,6 +86,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -98,7 +103,7 @@ public class RiderMapActivity extends AppCompatActivity
     private static final String TAG = RiderMapActivity.class.getSimpleName();
     private GoogleMap mMap;
     private CameraPosition mCameraPosition;
-    PlaceAutocompleteFragment placeAutoComplete;
+    AutocompleteSupportFragment placeAutoComplete;
     private Marker previousMarker, animationMarker;
 
     // The entry point to the Fused Location Provider.
@@ -130,9 +135,10 @@ public class RiderMapActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
 
-    private Place gplace;
 
-    private String KEY = "AIzaSyB_JRrGrBbcMHGkzl79HkE8HDOIUJ-JmXA";
+     Place gplace;
+
+    private String KEY = "AIzaSyCBzOeULa1Vfi3qBuuwRVei7O8rqT_BLJI";
 
     private List<LatLng> polyLineList;
 
@@ -156,7 +162,7 @@ public class RiderMapActivity extends AppCompatActivity
     RelativeLayout relativeLayout;
     ImageView driver_img, car_img;
     TextView name_txt, car_details_txt, registration_plate_txt, rating_txt;
-    Button call_btn, message_btn, cancel_btn;
+    Button chat_btn, call_btn, message_btn, cancel_btn;
 
 
 
@@ -191,26 +197,41 @@ public class RiderMapActivity extends AppCompatActivity
         LocalBroadcastManager.getInstance(this).registerReceiver(cancelMessageReceiver,
                 new IntentFilter("cancelTripRequestNotification"));
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(endTripMessageReceiver,
+                new IntentFilter("endTripNotification"));
+
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        placeAutoComplete = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete);
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), KEY);
+        }
+
+        placeAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete);
+
 
         //Filter for address & country
-        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+      /*  AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                 .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
                 .setCountry("GR")
                 .build();
         placeAutoComplete.setFilter(typeFilter);
-        placeAutoComplete.setHint("Where to?");
+        placeAutoComplete.setHint("Where to?");*/
+placeAutoComplete.setTypeFilter(TypeFilter.ADDRESS);
+placeAutoComplete.setCountry("GR");
+placeAutoComplete.setHint("Where to?");
+       if (placeAutoComplete != null) {
+            placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+
+        }
+
 
         placeAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
                 gplace = place;
-
-                Log.wtf("Maps", "Place gplace: " + gplace.getAddress());
+                Log.wtf("Maps", "Place gplace: " + gplace.getAddress() + gplace.getId());
                 Log.wtf("Maps", "Place g: " + place.getLatLng());
                 if (previousMarker != null) {
                     previousMarker.remove();
@@ -334,6 +355,7 @@ public class RiderMapActivity extends AppCompatActivity
                         polylineAnimator.start();
 
                         Log.wtf("123", "Unable to submit post to API."+parsedDistance);
+                        // Initiate Pop Up window in order to estimate the fare & request for uber
                         initiatePopupWindow(origin,destination,parsedDistance);
 
                         //Animation of the route from start to end
@@ -377,7 +399,7 @@ public class RiderMapActivity extends AppCompatActivity
                                                                 .build()));
                                     }
                                 });
-                              //valueAnimator.start();
+                                //valueAnimator.start();
                                 handler.postDelayed(this, 3000);
                             }
                         }, 3000);
@@ -395,10 +417,11 @@ public class RiderMapActivity extends AppCompatActivity
             }
 
             @Override
-            public void onError(Status status) {
+            public void onError(@NonNull Status status) {
                 Log.d("Maps", "An error occurred: " + status);
             }
         });
+
 
         // Build the map.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -578,7 +601,14 @@ public class RiderMapActivity extends AppCompatActivity
                             // Adding new item to the ArrayList
                             markerPoints.add(latLng);
 
-
+                            // SHOW THE DRIVERS IN 5km distance
+                            Circle circle = mMap.addCircle(new CircleOptions()
+                                    .center(latLng)
+                                    .radius(5000)
+                                    .strokeColor(Color.RED)
+                                    .fillColor(Color.TRANSPARENT)
+                                    .strokeWidth(1));
+                            
 
                         } else {
                             Log.wtf(TAG, "Current location is null. Using defaults.");
@@ -746,7 +776,7 @@ public class RiderMapActivity extends AppCompatActivity
 
             TextView mResultText = layout.findViewById(R.id.text);
             TextView estimated_fare = layout.findViewById(R.id.estimated_fare_txt);
-            Log.wtf("123", "Canont get Address!"+distance);
+            Log.wtf("123", "Distance!"+distance);
             String[] splited = distance.split("\\s+");
             final Double distance_value = Double.parseDouble(splited[0]);
             Log.wtf("123", "split"+splited[0]);
@@ -914,11 +944,35 @@ public class RiderMapActivity extends AppCompatActivity
                     .show();
         }
     };
+
+    //Broadcast "endTrip"
+    private BroadcastReceiver endTripMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //Unsubscribe from trip TOPIC
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(TRIPTOPIC);
+
+            // Get extra data included in the Intent
+            Bundle bundle = intent.getExtras();
+            Long tripId = bundle.getLong("tripId");
+
+            Log.wtf("tripId", "Got message: " + tripId);
+            Toast.makeText(RiderMapActivity.this,"End Trip notification",Toast.LENGTH_LONG).show();
+
+            Intent intent1 = new Intent(RiderMapActivity.this, RiderFareActivity.class);
+            intent1.putExtra("tripId", tripId);
+            startActivity(intent1);
+
+        }
+    };
+
     @Override
     protected void onDestroy() {
         // Unregister since the activity is about to be closed.
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
         LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(cancelMessageReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(endTripMessageReceiver);
         super.onDestroy();
     }
 
@@ -939,6 +993,15 @@ public class RiderMapActivity extends AppCompatActivity
         car_details_txt = layout.findViewById(R.id.car_details);
         name_txt.setText(firstName + " " + lastName);
         car_details_txt.setText(manufacturer+" "+model);
+
+        chat_btn = layout.findViewById(R.id.chat_btn);
+        chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RiderMapActivity.this, ChatActivity.class);
+                startActivity(intent);
+            }
+        });
 
         call_btn = layout.findViewById(R.id.call_btn);
         call_btn.setOnClickListener(new View.OnClickListener() {

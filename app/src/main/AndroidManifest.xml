@@ -50,6 +50,8 @@
         <activity android:name=".TripDetailsActivity"/>
         <activity android:name=".DriverTripHistoryActivity"/>
         <activity android:name=".WelcomeDriverActivity"/>
+        <activity android:name=".ChatActivity"/>
+        <activity android:name=".Register"/>
         <activity android:name=".RequestCallActivity"
             android:launchMode="singleTask"
             android:taskAffinity=""

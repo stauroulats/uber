@@ -32,7 +32,7 @@ tools:context=".TripSchedule">
             android:textColor="@color/blue"
             android:textSize="20sp" />
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="20dp">
@@ -82,21 +82,23 @@ tools:context=".TripSchedule">
                     android:layout_height="1dp"
                     android:background="@color/light_blue" />
 
-                <EditText
+               <TextView
                     android:id="@+id/pickUp_location_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:gravity="center"
                     android:hint="@string/pickUp_location"
-                    android:padding="12dp" />
+                    android:padding="12dp"/>
+
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/light_blue" />
 
-                <EditText
+
+ <!--              <EditText
                     android:id="@+id/destination_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -104,22 +106,29 @@ tools:context=".TripSchedule">
                     android:gravity="center"
                     android:hint="@string/destination"
                     android:padding="12dp" />
+-->
+                <fragment
+                    android:id="@+id/destination_place_autocomplete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                    />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/light_blue" />
-<!--
+
                 <fragment
-                    android:id="@+id/map"
-                    class="com.google.android.gms.maps.MapFragment"
+                    android:id="@+id/appointmentMap"
+                    class="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     />
--->
-                <Button
+
+ <!--               <Button
                     android:id="@+id/schedule_btn"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -130,11 +139,13 @@ tools:context=".TripSchedule">
                     android:textAlignment="center"
                     android:textColor="@color/blue_black"
                     android:textSize="14sp"/>
-
+-->
             </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+
+
 
 </RelativeLayout>

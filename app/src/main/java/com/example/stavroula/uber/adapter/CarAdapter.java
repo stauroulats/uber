@@ -1,19 +1,21 @@
+
 package com.example.stavroula.uber.adapter;
 
+import static java.lang.String.valueOf;
+
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.stavroula.uber.R;
 import com.example.stavroula.uber.entity.Car;
 
 import java.util.List;
-
-import static java.lang.String.valueOf;
 
 
     public class CarAdapter extends RecyclerView.Adapter<CarAdapter.CarViewHolder> {
@@ -21,24 +23,25 @@ import static java.lang.String.valueOf;
         private List<Car> dataList;
         private Context context;
 
-        public CarAdapter(Context context, List<Car> dataList) {
+        public CarAdapter(List<Car> dataList, Context context) {
             this.context = context;
             this.dataList = dataList;
         }
 
-        class CarViewHolder extends RecyclerView.ViewHolder {
+      public static class CarViewHolder extends RecyclerView.ViewHolder {
 
             public final View mView;
 
             TextView txtManufacturer, txtModel , txtRegistrationPlate;
 
+
             CarViewHolder(View itemView) {
                 super(itemView);
                 mView = itemView;
 
-                txtManufacturer = mView.findViewById(R.id.manufacturer);
-                txtModel = mView.findViewById(R.id.model);
-                txtRegistrationPlate = mView.findViewById(R.id.registrationPlate);
+                this.txtManufacturer = (TextView) mView.findViewById(R.id.manufacturer);
+                this.txtModel = (TextView) mView.findViewById(R.id.model);
+                this.txtRegistrationPlate = (TextView) mView.findViewById(R.id.registrationPlate);
             }
         }
 
@@ -51,21 +54,24 @@ import static java.lang.String.valueOf;
 
         @Override
         public void onBindViewHolder(CarViewHolder holder, int position) {
-            holder.txtManufacturer.setText(dataList.get(position).getManufacturer());
-            holder.txtModel.setText(dataList.get(position).getModel());
-            holder.txtRegistrationPlate.setText(dataList.get(position).getRegistrationPlate());
+            TextView txtManufacturer = holder.txtManufacturer;
+            TextView txtModel = holder.txtModel;
+            TextView txtRegistrationPlate = holder.txtRegistrationPlate;
+
+            txtManufacturer.setText(dataList.get(position).getManufacturer());
+            txtModel.setText(dataList.get(position).getModel());
+            txtRegistrationPlate.setText(dataList.get(position).getRegistrationPlate());
+
         }
 
         public void setCars(List<Car> cars) {
             dataList = cars;
-            Log.d("123", valueOf(dataList.size()));
+            Log.d("VALUE", valueOf(dataList.size()));
         }
 
         @Override
         public int getItemCount() {
-
             int a;
-
             if (dataList != null && !dataList.isEmpty()) {
 
                 a = dataList.size();
@@ -74,8 +80,10 @@ import static java.lang.String.valueOf;
                 a = 0;
 
             }
+            Log.d("SIZE", valueOf(dataList.size()));
 
             return a;
+
         }
     }
 

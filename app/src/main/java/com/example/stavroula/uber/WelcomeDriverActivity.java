@@ -18,12 +18,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,7 +37,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.example.stavroula.uber.entity.Car;
+import com.example.stavroula.uber.entity.Driver;
+import com.example.stavroula.uber.entity.Trip;
 import com.example.stavroula.uber.entity.TripRequest;
 import com.example.stavroula.uber.network.RetrofitClient;
 import com.example.stavroula.uber.service.ApiService;
@@ -119,7 +122,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
     private Location mLastKnownLocation;
     private ArrayList markerPoints= new ArrayList();
 
-    private String KEY = "AIzaSyB_JRrGrBbcMHGkzl79HkE8HDOIUJ-JmXA";
+    private String KEY = "AIzaSyCBzOeULa1Vfi3qBuuwRVei7O8rqT_BLJI";
 
     private List<LatLng> polyLineList;
 
@@ -182,8 +185,14 @@ public class WelcomeDriverActivity extends AppCompatActivity
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+                    Driver driver = new Driver();
+                    driver.setActive(true);
+                    updateStatus(true);
                 }else {
                     FirebaseMessaging.getInstance().unsubscribeFromTopic(TOPIC);
+                    Driver driver = new Driver();
+                    driver.setActive(true);
+                    updateStatus(false);
                 }
 
             }
@@ -211,7 +220,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
                         Toast.makeText(WelcomeDriverActivity.this,"Your selected car is:" + cars.get(0).getManufacturer(), Toast.LENGTH_LONG).show();
                     }
                     else {
-                       /* initiatePopupWindow(cars);*/}
+                       /*initiatePopupWindow(cars);*/}
                     }
                 }
 
@@ -261,7 +270,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
 
     }
 
-    private void createRoute(Long tripid) {
+    private void createRoute(final Long tripRequestId) {
         //Retrieve tripRequestId from RequestCallActivity --> notification data
             final LatLng riderPosiiton = new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
             final String origin =getCompleteAddress(riderPosiiton.latitude,riderPosiiton.longitude);
@@ -270,7 +279,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
 
             final ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
 
-            Call<TripRequest> call = apiService.getTripRequest(tripid);
+            Call<TripRequest> call = apiService.getTripRequest(tripRequestId);
             Log.d("123", "call" + call.toString());
             call.enqueue(new Callback<TripRequest>() {
                 @Override
@@ -295,8 +304,9 @@ public class WelcomeDriverActivity extends AppCompatActivity
 
                     if (response.isSuccessful()) {
                         int statusCode = response.code();
-                        TripRequest tripRequest = response.body();
+                        final TripRequest tripRequest = response.body();
                         final String pickUpPoint = tripRequest.getPickUpPoint();
+                        final String riderDestination = tripRequest.getDestination();
                         Log.wtf("123", "pickup" + pickUpPoint);
                         LatLng address = getLocationFromAddress(getApplicationContext(),pickUpPoint);
                         Log.wtf("123", "address" + address.latitude+" " +address.longitude);
@@ -466,7 +476,6 @@ public class WelcomeDriverActivity extends AppCompatActivity
                                             dialog.setContentView(R.layout.dialog_layout);
                                             dialog.setCanceledOnTouchOutside(false);
                                             dialog.setCancelable(true);
-
                                             start_trip_btn = dialog.findViewById(R.id.start_trip_btn);
 
                                             start_trip_btn.setOnClickListener(new View.OnClickListener() {
@@ -474,6 +483,34 @@ public class WelcomeDriverActivity extends AppCompatActivity
                                                 public void onClick(View view) {
                                                     //TODO startTrip
                                                     dialog.cancel();
+                                                    // Start Trip Request
+                                                    ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+
+                                                    Call<Trip> call = apiService.startTrip(tripRequestId);
+                                                    call.enqueue(new Callback<Trip>() {
+                                                        @Override
+                                                        public void onResponse(Call<Trip> call, Response<Trip> response) {
+                                                            if (response.isSuccessful()){
+                                                                final Long tripId = response.body().getId();
+                                                                Log.wtf("123", "Got notification:Driver cancel");
+                                                                Log.wtf("123", "RIDERPOSITION" +riderDestination + " " + pickUpPoint);
+                                                                Intent intent = new Intent(WelcomeDriverActivity.this, TripActivity.class);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                                intent.putExtra("riderPosition", origin);
+                                                                intent.putExtra("riderDestination", riderDestination);
+                                                                intent.putExtra("tripId", tripId);
+                                                                // intent.putExtra("data2", );
+                                                                startActivity(intent);
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onFailure(Call<Trip> call, Throwable t) {
+
+                                                        }
+                                                    });
+
                                                 }
                                             });
 
@@ -502,6 +539,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
             });
 
     }
+
 
 
     private void sendNotification(Long driverId) {
@@ -835,8 +873,6 @@ public class WelcomeDriverActivity extends AppCompatActivity
 
 
     private void initiateRiderInfoPopupWindow(String riderName, String rating, final Long tripRequestId) {
-
-
         LayoutInflater inflater = LayoutInflater.from(this);
         //Inflate the view from a predefined XML layout
         View layout = inflater.inflate(R.layout.pop_up_trip_driver,null);
@@ -983,6 +1019,37 @@ public class WelcomeDriverActivity extends AppCompatActivity
         else if (begin.latitude < end.latitude && begin.longitude >= end.longitude)
             return (float) ((90 - Math.toDegrees(Math.atan(lng / lat))) + 270);
         return -1;
+    }
+
+    private void updateStatus(boolean status){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Log.d("123", "apiservice" + apiService.toString());
+
+        Call<Boolean> call = apiService.updateDriverStatus(status);
+        Log.d("123", "call" + call.toString());
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                Log.wtf("123", "response" + new Gson().toJson(response.body()));
+
+                int msg = response.code();
+                Log.d("123", "message" + msg);
+
+                if (response.isSuccessful()) {
+                    Log.d("123", "response"+response.body().toString());
+                    Log.d("123", "post submitted to API." + response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.d("123", "Unable to submit post to API.");
+            }
+        });
+
+        Toast.makeText(WelcomeDriverActivity.this, "These are all your Credit Cards",
+                Toast.LENGTH_SHORT).show();
+
     }
 
 

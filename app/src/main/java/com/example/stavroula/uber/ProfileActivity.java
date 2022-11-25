@@ -1,8 +1,13 @@
 package com.example.stavroula.uber;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.ImageDecoder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -23,7 +29,11 @@ import com.example.stavroula.uber.entity.Rider;
 import com.example.stavroula.uber.entity.User;
 import com.example.stavroula.uber.network.RetrofitClient;
 import com.example.stavroula.uber.service.ApiService;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +55,10 @@ public class ProfileActivity extends MainActivity {
     PopupWindow pw;
 
     RelativeLayout relativeLayout;
+
+
+    private final int PICK_IMAGE_REQUEST = 71;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +87,7 @@ public class ProfileActivity extends MainActivity {
         edt_address = findViewById(R.id.edt_address);
         edt_zip_code = findViewById(R.id.edt_zip_code);
 
+
         mResponse = findViewById(R.id.mresponse);
 
         gender_spinner = findViewById(R.id.gender_spinner);
@@ -97,6 +112,12 @@ public class ProfileActivity extends MainActivity {
 
 
         profile_photo = findViewById(R.id.profile_photo);
+        profile_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choose_photo();
+            }
+        });
         change_password = findViewById(R.id.change_password);
         change_password.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,9 +190,94 @@ public class ProfileActivity extends MainActivity {
 
     }
 
+    private void choose_photo() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
+    }
 
 
-        private void change_password() {
+    //Opens gallery to pick up an image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        //Detects request codes
+        if(requestCode==PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            Uri selectedImage = data.getData();
+            ImageView image;
+            Bitmap bitmap = null;
+
+            if (Build.VERSION.SDK_INT >= 29) {
+                ImageDecoder.Source source = ImageDecoder.createSource(getApplicationContext().getContentResolver(), selectedImage);
+                try {
+                    bitmap = ImageDecoder.decodeBitmap(source);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    bitmap = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), selectedImage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        /*    image.setImageBitmap(bitmap); */
+//TO DE DELETED
+        /*    try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } */
+
+       /*    Photo photo = new Photo(bitmap);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), photo);
+            MultipartBody.Part partImage = MultipartBody.Part.createFormData("file", photo.getName(), requestBody);
+
+            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+            Log.d("123", "apiservice" + apiService.toString());
+
+            Call<User> call = apiService.updateUser(user);
+            Log.d("123", "call" + call.toString());
+            call.enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    Log.wtf("123", "response" + new Gson().toJson(response.body()));
+
+                    int msg = response.code();
+                    Log.d("123", "message" + msg);
+
+                    if (response.isSuccessful()) {
+
+                        Toast.makeText(call.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                        int statusCode = response.code();
+                        User user= response.body();
+
+                        showResponse(new Gson().toJson(response.body()));
+                        Log.d("123", "response" + response.body().toString());
+                        Log.d("123", "post submitted to API." + response.body().toString());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Log.d("123", "Unable to submit post to API.");
+                }
+            }); */
+        }
+    }
+
+
+
+    private void change_password() {
             try {
 
                 LayoutInflater inflater = LayoutInflater.from(this);

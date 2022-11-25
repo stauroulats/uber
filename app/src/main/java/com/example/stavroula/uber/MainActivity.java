@@ -2,17 +2,18 @@ package com.example.stavroula.uber;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Button rider_login_button, rider_register_button, driver_login_button, driver_register_button;
 
-    Button test_btn,profile, history_btn;
+    Button test_btn,profile, history_btn, cars_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        cars_btn = findViewById(R.id.cars_btn);
+        cars_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cars();
+            }
+        });
+
     }
 
     private void rider_login() {
@@ -93,11 +102,11 @@ public class MainActivity extends AppCompatActivity {
     private void rider_register() {
 
         LayoutInflater inflater = LayoutInflater.from(this);
-        View layout_register = inflater.inflate(R.layout.layout_register,null);
+        View layout_register = inflater.inflate(R.layout.register,null);
 
         Toast.makeText(MainActivity.this,"Enter your personal info to SignUp",
                 Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainActivity.this,SignUpActivity.class);
+        Intent intent = new Intent(MainActivity.this,Register.class);
         startActivity(intent);
 
     }
@@ -122,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toast.makeText(MainActivity.this,"Enter your personal info to SignUp",
                 Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainActivity.this,SignUpDriverActivity.class);
+        Intent intent = new Intent(MainActivity.this,ChatActivity.class);
         startActivity(intent);
 
     }
@@ -135,6 +144,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
     }
 
+    private void cars(){
+        LayoutInflater inflater = LayoutInflater.from(this);
+        // View layout_register = inflater.inflate(R.layout.rtrip_history_layout,null);
+        View layout_register = inflater.inflate(R.layout.layout_vehicle_list,null);
+        Intent intent = new Intent(MainActivity.this,VehiclesActivity.class);
+        startActivity(intent);
+    }
+
     private void profile(){
         LayoutInflater inflater = LayoutInflater.from(this);
         View layout_register = inflater.inflate(R.layout.profile_layout,null);
@@ -144,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void history(){
         LayoutInflater inflater = LayoutInflater.from(this);
-        View map_layout = inflater.inflate(R.layout.activity_rider_maps,null);
+        View map_layout = inflater.inflate(R.layout.second_activity,null);
         Intent intent = new Intent(MainActivity.this,RiderMapActivity.class);
         startActivity(intent);
 
@@ -153,5 +170,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this,DriverTripHistoryActivity.class);
         startActivity(intent);*/
     }
+
+
 }
 

@@ -7,13 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.stavroula.uber.R;
 import com.example.stavroula.uber.RequestCallActivity;
 import com.example.stavroula.uber.RiderMapActivity;
+import com.example.stavroula.uber.WelcomeDriverActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
@@ -87,21 +89,30 @@ public class FCMClass extends FirebaseMessagingService {
                     //startActivity(intent);
                 } else if (tag.equals("driver-cancelRequest")){
                     Log.e(TAG, "Data: " + remoteMessage.getData());
-                    sendDriverInfoNotification(remoteMessage);
-                    Intent broadcastIntent = new Intent("driver-cancelRequest");
+                    sendDriverCancelNotification(remoteMessage);
+                    Intent broadcastIntent = new Intent("cancelTripRequestNotification");
                     broadcastIntent.putExtra("data1", remoteMessage.getData().get("tripRequestId"));
                     LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
                 }
                 else if (tag.equals("rider-cancelRequest")){
                     Log.e(TAG, "Data: " + remoteMessage.getData());
-                    sendDriverInfoNotification(remoteMessage);
-                    Intent broadcastIntent = new Intent("rider-cancelRequest");
+                    sendRiderCancelNotification(remoteMessage);
+                    Intent broadcastIntent = new Intent("cancelTripNotification");
                     broadcastIntent.putExtra("data1", remoteMessage.getData().get("tripRequestId"));
                     LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
                 }
+                else if (tag.equals("payment")){
+                    sendPaymentfoNotification(remoteMessage);
+                    //Intent broadcastIntent = new Intent("creditCard-payment");
+                    //broadcastIntent.putExtra("data1", remoteMessage.getData().get("tripRequestId"));
+                    //LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+                }
+
             }
         }
     }
+
+
     private void sendNotification(RemoteMessage remoteMessage) {
         RemoteMessage.Notification notification = remoteMessage.getNotification();
 
@@ -165,6 +176,83 @@ public class FCMClass extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         Intent intent = new Intent(this, RiderMapActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_car)
+                .setContentTitle(notification.getTitle())
+                .setContentText(notification.getBody())
+                .setPriority(Notification.PRIORITY_MAX)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(324, notificationBuilder.build());
+    }
+    private void sendDriverCancelNotification(RemoteMessage remoteMessage) {
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, RiderMapActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_car)
+                .setContentTitle(notification.getTitle())
+                .setContentText(notification.getBody())
+                .setPriority(Notification.PRIORITY_MAX)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(324, notificationBuilder.build());
+    }
+
+    private void sendRiderCancelNotification(RemoteMessage remoteMessage) {
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this, WelcomeDriverActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.ic_car)
+                .setContentTitle(notification.getTitle())
+                .setContentText(notification.getBody())
+                .setPriority(Notification.PRIORITY_MAX)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setAutoCancel(true)
+                .setSound(defaultSoundUri)
+                .setContentIntent(pendingIntent);
+
+        notificationManager.notify(324, notificationBuilder.build());
+    }
+
+    private void sendPaymentfoNotification(RemoteMessage remoteMessage) {
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent intent = new Intent(this,RiderMapActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);

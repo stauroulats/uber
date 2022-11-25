@@ -1,23 +1,30 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cars_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginLeft="20dp">
+        android:layout_marginLeft="10dp">
 
         <ImageView
             android:id="@+id/credit_card_img"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/ic_credit_cards" />
+            android:src="@drawable/ic_car_black" />
 
     </LinearLayout>
 
@@ -25,30 +32,32 @@
         android:id="@+id/second_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/manufacturer"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_gravity="top"
             android:layout_weight="1"
             android:paddingRight="16dp"
             android:textStyle="bold"
             android:textColor="@color/blue_black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/model"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
             android:layout_weight="2"
             android:paddingRight="16dp"
             android:textStyle="bold"
             android:textColor="@color/blue_black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -71,3 +80,5 @@
 
 
 </LinearLayout>
+
+    </androidx.cardview.widget.CardView>

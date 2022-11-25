@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Trip {
 
+    @SerializedName("id")
+    @Expose
+    private Long id;
     @SerializedName("date")
     @Expose
     private String date;
@@ -29,6 +32,14 @@ public class Trip {
     @SerializedName("tripRequest")
     @Expose
     private TripRequest tripRequest;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getDate() {
         return date;

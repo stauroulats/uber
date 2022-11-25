@@ -1,19 +1,20 @@
 package com.example.stavroula.uber.adapter;
 
+import static java.lang.String.valueOf;
+
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.stavroula.uber.R;
 import com.example.stavroula.uber.entity.CreditCard;
 
 import java.util.List;
-
-import static java.lang.String.valueOf;
 
 
 public class CreditCardAdapter extends RecyclerView.Adapter<CreditCardAdapter.CreditCardViewHolder> {
@@ -56,7 +57,7 @@ public class CreditCardAdapter extends RecyclerView.Adapter<CreditCardAdapter.Cr
 
     public void setCreditCardList(List<CreditCard> creditCards) {
         dataList = creditCards;
-        Log.d("123", valueOf(dataList.size()));
+        Log.d("VALUE", valueOf(dataList.size()));
     }
 
     @Override
@@ -70,6 +71,7 @@ public class CreditCardAdapter extends RecyclerView.Adapter<CreditCardAdapter.Cr
         } else {
 
             a = 0;
+            Log.d("VALUE0", valueOf(dataList.size()));
 
         }
 

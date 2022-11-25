@@ -1,5 +1,6 @@
 package com.example.stavroula.uber;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,13 +21,19 @@ import retrofit2.Response;
 
 public class RatingActivity extends MainActivity {
 
+    Long tripId;
+
     TextView mResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rating_layout);
 
          mResponse =  findViewById(R.id.mresponse);
+
+        Bundle bundle = getIntent().getExtras();
+        tripId = bundle.getLong("tripId");
 
         final RatingBar ratingBar = findViewById(R.id.ratingBar);
         ImageButton return_btn = findViewById(R.id.return_button);
@@ -60,6 +67,8 @@ public class RatingActivity extends MainActivity {
                 rating.setDescription(feedback_txt);
 
                 saveRating(rating);
+                Intent intent = new Intent(RatingActivity.this, WelcomeDriverActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -67,7 +76,7 @@ public class RatingActivity extends MainActivity {
     private void saveRating(Rating rating){
 
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Call<Rating> call = apiService.saveRating(rating);
+        Call<Rating> call = apiService.saveRating(tripId,rating);
         call.enqueue(new Callback<Rating>() {
             @Override
             public void onResponse(Call<Rating> call, Response<Rating> response) {

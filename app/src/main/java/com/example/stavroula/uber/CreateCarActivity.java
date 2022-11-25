@@ -2,8 +2,6 @@ package com.example.stavroula.uber;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.stavroula.uber.entity.Car;
 import com.example.stavroula.uber.service.ApiService;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -92,7 +92,7 @@ public class CreateCarActivity extends SignUpDriverActivity{
     private void createCar(Car car) {
 
         Log.d("123", "car"+ car);
-        String url = "http://192.168.1.4:8080/";
+        String url = "http://192.168.1.15:8080/";
         Log.d("123", "http://localhost/");
         Retrofit retrofit = null;
         Log.d("123", "retrofit");
