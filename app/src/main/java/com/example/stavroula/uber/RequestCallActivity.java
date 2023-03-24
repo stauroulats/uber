@@ -13,7 +13,11 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.stavroula.uber.entity.TripRequest;
 import com.example.stavroula.uber.network.RetrofitClient;
 import com.example.stavroula.uber.service.ApiService;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -83,7 +87,8 @@ public class RequestCallActivity extends MainActivity {
         accept_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acceptRequest(trip_request_id, riderName,rating);
+                String chatRoomId = createChatRoom(trip_request_id);
+                acceptRequest(trip_request_id, riderName,rating, chatRoomId);
             //TODO call POST method acceptRequest
             }
         });
@@ -99,10 +104,9 @@ public class RequestCallActivity extends MainActivity {
         });
     }
 
-   private void acceptRequest(final Long tripRequestId, final String riderName, final String rating){
-       ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-
-       Call<TripRequest> call = apiService.acceptRequest(tripRequestId);
+   private void acceptRequest(final Long tripRequestId, final String riderName, final String rating, String chatRoomId){
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+       Call<TripRequest> call = apiService.acceptRequest(tripRequestId,chatRoomId );
        Log.d("123", "call" + call.toString());
        call.enqueue(new Callback<TripRequest>() {
            @Override
@@ -191,5 +195,18 @@ public class RequestCallActivity extends MainActivity {
                 Log.d("123", "Unable to submit post to API.");
             }
         });
+    }
+
+    private String createChatRoom(Long trip_request_id) {
+        String trip_req_id = trip_request_id.toString();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+        DatabaseReference chat_reference = reference.child(trip_req_id);
+        DatabaseReference uid = chat_reference.push();
+        String chatRoomUid = uid.getKey();
+        HashMap<String,Object> hashmap = new HashMap<> ();
+        hashmap.put("chatID",chatRoomUid);
+        Log.wtf("123", "UID"+chatRoomUid);
+
+        return chatRoomUid;
     }
 }

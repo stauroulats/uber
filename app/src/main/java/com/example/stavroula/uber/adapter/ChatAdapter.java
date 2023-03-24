@@ -1,20 +1,17 @@
 package com.example.stavroula.uber.adapter;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.stavroula.uber.R;
 import com.example.stavroula.uber.entity.ChatMessage;
 
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Class responsible to show all the messages
@@ -41,7 +38,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         ChatViewHolder(View view) {
             super(view);
 
-            receiver =  view.findViewById(R.id.item_username);
+            sender =  view.findViewById(R.id.item_username);
             message =  view.findViewById(R.id.item_message);
             time = view.findViewById(R.id.item_time);
         }
@@ -82,12 +79,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public void onBindViewHolder(ChatViewHolder holder, int position) {
         ChatMessage data = dataList.get(position);
 
-        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+       /* Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(Long.parseLong(data.getTime()));
-        String time = DateFormat.format("dd/MM/yyyy hh:mm aa",calendar).toString();
+        String time = DateFormat.format("dd/MM/yyyy hh:mm aa",calendar).toString(); */
+
+       /* Calendar calendar = Calendar.getInstance();
+        Date currentTime = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timeString = simpleDateFormat.format(currentTime);*/
 
         holder.message.setText(data.getMessage());
-        holder.receiver.setText(data.getReceiver());
-        holder.time.setText(time);
+        holder.sender.setText(data.getSender_id());
+        holder.time.setText(data.getTime());
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.stavroula.uber.entity.Car;
+import com.example.stavroula.uber.network.RetrofitClient;
 import com.example.stavroula.uber.service.ApiService;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -19,8 +20,6 @@ import com.google.gson.Gson;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CreateCarActivity extends SignUpDriverActivity{
 
@@ -90,22 +89,7 @@ public class CreateCarActivity extends SignUpDriverActivity{
     }
 
     private void createCar(Car car) {
-
-        Log.d("123", "car"+ car);
-        String url = "http://192.168.1.15:8080/";
-        Log.d("123", "http://localhost/");
-        Retrofit retrofit = null;
-        Log.d("123", "retrofit");
-
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-            Log.d("123", "build();"+retrofit.toString());
-        }
-
-        ApiService apiService = retrofit.create(ApiService.class);
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Log.d("123", "apiservice"+apiService.toString());
 
         Call<Car> call =  apiService.createCar(car);

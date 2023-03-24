@@ -44,6 +44,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.stavroula.uber.entity.Driver;
 import com.example.stavroula.uber.entity.TripRequest;
 import com.example.stavroula.uber.entity.TripRequestData;
 import com.example.stavroula.uber.network.RetrofitClient;
@@ -124,9 +125,9 @@ public class RiderMapActivity extends AppCompatActivity
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
-    private ArrayList markerPoints= new ArrayList();
+    private ArrayList markerPoints = new ArrayList();
 
-    private ImageButton appointment_btn , close_btn;
+    private ImageButton appointment_btn, close_btn;
 
     private PopupWindow pw;
 
@@ -136,7 +137,7 @@ public class RiderMapActivity extends AppCompatActivity
     private ActionBarDrawerToggle mToggle;
 
 
-     Place gplace;
+    Place gplace;
 
     private String KEY = "AIzaSyCBzOeULa1Vfi3qBuuwRVei7O8rqT_BLJI";
 
@@ -163,7 +164,6 @@ public class RiderMapActivity extends AppCompatActivity
     ImageView driver_img, car_img;
     TextView name_txt, car_details_txt, registration_plate_txt, rating_txt;
     Button chat_btn, call_btn, message_btn, cancel_btn;
-
 
 
     @Override
@@ -218,10 +218,10 @@ public class RiderMapActivity extends AppCompatActivity
                 .build();
         placeAutoComplete.setFilter(typeFilter);
         placeAutoComplete.setHint("Where to?");*/
-placeAutoComplete.setTypeFilter(TypeFilter.ADDRESS);
-placeAutoComplete.setCountry("GR");
-placeAutoComplete.setHint("Where to?");
-       if (placeAutoComplete != null) {
+        placeAutoComplete.setTypeFilter(TypeFilter.ADDRESS);
+        placeAutoComplete.setCountry("GR");
+        placeAutoComplete.setHint("Where to?");
+        if (placeAutoComplete != null) {
             placeAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
 
         }
@@ -247,9 +247,9 @@ placeAutoComplete.setHint("Where to?");
                     Log.wtf("123", "latlng start = " + start + "latlng dest is = " + dest);
                 }
 
-                final LatLng riderPosiiton = new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
-                final String origin =getCompleteAddress(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
-                final String destination= gplace.getAddress().toString();
+                final LatLng riderPosiiton = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                final String origin = getCompleteAddress(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                final String destination = gplace.getAddress().toString();
                 Log.wtf("123", "origin,destination" + origin + destination);
                 String url = "https://maps.googleapis.com/";
                 Log.wtf("123", "http://maps/api/directions/");
@@ -261,14 +261,14 @@ placeAutoComplete.setHint("Where to?");
                             .baseUrl(url)
                             .addConverterFactory(GsonConverterFactory.create())
                             .build();
-                    Log.wtf("123", "build();"+retrofit.toString());
+                    Log.wtf("123", "build();" + retrofit.toString());
                 }
 
                 ApiService apiService = retrofit.create(ApiService.class);
-                Log.wtf("123", "apiservice"+apiService.toString());
+                Log.wtf("123", "apiservice" + apiService.toString());
 
-                Call<JsonObject> call =  apiService.getDirections("driving","less_driving",origin,destination,KEY);
-                Log.wtf("123", "call"+call.request().toString());
+                Call<JsonObject> call = apiService.getDirections("driving", "less_driving", origin, destination, KEY);
+                Log.wtf("123", "call" + call.request().toString());
                 call.enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -295,7 +295,7 @@ placeAutoComplete.setHint("Where to?");
                                 JSONObject steps = legs.getJSONObject(0);
                                 JSONObject distance = steps.getJSONObject("distance");
                                 parsedDistance = distance.getString("text");
-                                Log.wtf("123", "distance"+parsedDistance);
+                                Log.wtf("123", "distance" + parsedDistance);
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
                                     JSONObject route = jsonArray.getJSONObject(i);
@@ -354,9 +354,9 @@ placeAutoComplete.setHint("Where to?");
                         });
                         polylineAnimator.start();
 
-                        Log.wtf("123", "Unable to submit post to API."+parsedDistance);
+                        Log.wtf("123", "Unable to submit post to API." + parsedDistance);
                         // Initiate Pop Up window in order to estimate the fare & request for uber
-                        initiatePopupWindow(origin,destination,parsedDistance);
+                        initiatePopupWindow(origin, destination, parsedDistance);
 
                         //Animation of the route from start to end
                         animationMarker = mMap.addMarker(new MarkerOptions().position(riderPosiiton)
@@ -432,8 +432,8 @@ placeAutoComplete.setHint("Where to?");
 
 
         //Clock button/Schedule Trip
-       appointment_btn =  findViewById(R.id.appointment_icon);
-       appointment_btn.setOnClickListener(new View.OnClickListener() {
+        appointment_btn = findViewById(R.id.appointment_icon);
+        appointment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 trip_schedule();
@@ -443,7 +443,7 @@ placeAutoComplete.setHint("Where to?");
 
         //Navigation Drawer
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        mToggle = new ActionBarDrawerToggle(this,mDrawerLayout,R.string.open_nav_menu,R.string.close_nav_menu);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open_nav_menu, R.string.close_nav_menu);
         mDrawerLayout.addDrawerListener(mToggle);
 
         mToggle.syncState();
@@ -481,7 +481,7 @@ placeAutoComplete.setHint("Where to?");
                         startActivity(intent3);
                         break;
                     case R.id.nav_log_out:
-                        AlertDialog.Builder builder=new AlertDialog.Builder(RiderMapActivity.this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(RiderMapActivity.this);
                         builder.setMessage("Do you want to exit?");
                         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
@@ -498,7 +498,7 @@ placeAutoComplete.setHint("Where to?");
                             }
                         });
 
-                        AlertDialog alert=builder.create();
+                        AlertDialog alert = builder.create();
                         alert.show();
                         break;
                 }
@@ -552,6 +552,10 @@ placeAutoComplete.setHint("Where to?");
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            //New addon
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    123);
             return;
         }
         mMap.setMyLocationEnabled(true);
@@ -593,7 +597,9 @@ placeAutoComplete.setHint("Where to?");
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                            LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                            LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                            double latitude = mLastKnownLocation.getLatitude();
+                            double longitude = mLastKnownLocation.getLongitude();
                             /*Marker car icon*/
                             mMap.addMarker(new MarkerOptions().position(new LatLng(mLastKnownLocation.getLatitude(),
                                     mLastKnownLocation.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
@@ -608,7 +614,10 @@ placeAutoComplete.setHint("Where to?");
                                     .strokeColor(Color.RED)
                                     .fillColor(Color.TRANSPARENT)
                                     .strokeWidth(1));
-                            
+
+                            List<Driver> drivers = getAllAvailableDrivers();
+                            displayDriversOnMap(drivers,latitude,longitude);
+
 
                         } else {
                             Log.wtf(TAG, "Current location is null. Using defaults.");
@@ -620,14 +629,14 @@ placeAutoComplete.setHint("Where to?");
                     }
                 });
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        String address = getCompleteAddress(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+        String address = getCompleteAddress(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
         Toast.makeText(this, "Current location:\n" + address, Toast.LENGTH_LONG).show();
     }
 
@@ -695,7 +704,7 @@ placeAutoComplete.setHint("Where to?");
                 mLastKnownLocation = null;
                 getLocationPermission();
             }
-        } catch (SecurityException e)  {
+        } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
     }
@@ -727,20 +736,20 @@ placeAutoComplete.setHint("Where to?");
 
     private void trip_schedule() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View layout_appointment = inflater.inflate(R.layout.layout_schedule_appointment,null);
-        Intent intent = new Intent(RiderMapActivity.this,TripSchedule.class);
+        View layout_appointment = inflater.inflate(R.layout.layout_schedule_appointment, null);
+        Intent intent = new Intent(RiderMapActivity.this, TripSchedule.class);
         startActivity(intent);
     }
 
-    private void addMarker(Place p){
+    private void addMarker(Place p) {
 
         MarkerOptions markerOptions = new MarkerOptions();
 
         markerOptions.position(p.getLatLng());
-        markerOptions.title(p.getName()+"");
+        markerOptions.title(p.getName() + "");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
 
-        previousMarker =  mMap.addMarker(markerOptions);
+        previousMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(p.getLatLng()));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
     }
@@ -752,7 +761,7 @@ placeAutoComplete.setHint("Where to?");
         return location;
     }
 
-    private float bearingBetweenLatLngs(LatLng beginLatLng,LatLng endLatLng) {
+    private float bearingBetweenLatLngs(LatLng beginLatLng, LatLng endLatLng) {
         Location beginLocation = convertLatLngToLocation(beginLatLng);
         Location endLocation = convertLatLngToLocation(endLatLng);
         return beginLocation.bearingTo(endLocation);
@@ -763,7 +772,7 @@ placeAutoComplete.setHint("Where to?");
 
             LayoutInflater inflater = LayoutInflater.from(this);
             //Inflate the view from a predefined XML layout
-            View layout = inflater.inflate(R.layout.pop_up_rider_map,null);
+            View layout = inflater.inflate(R.layout.pop_up_rider_map, null);
 
 
             mRelativeLayout = layout.findViewById(R.id.pop_up_window);
@@ -776,16 +785,16 @@ placeAutoComplete.setHint("Where to?");
 
             TextView mResultText = layout.findViewById(R.id.text);
             TextView estimated_fare = layout.findViewById(R.id.estimated_fare_txt);
-            Log.wtf("123", "Distance!"+distance);
+            Log.wtf("123", "Distance!" + distance);
             String[] splited = distance.split("\\s+");
             final Double distance_value = Double.parseDouble(splited[0]);
-            Log.wtf("123", "split"+splited[0]);
-            Log.wtf("123", "charge"+charge);
-            double total = (distance_value*charge);
-            Log.wtf("123", "total!"+total);
+            Log.wtf("123", "split" + splited[0]);
+            Log.wtf("123", "charge" + charge);
+            double total = (distance_value * charge);
+            Log.wtf("123", "total!" + total);
             DecimalFormat df = new DecimalFormat("0.00");
-            estimated_fare.setText(String.valueOf(df.format(total))+"$");
-            Log.wtf("123", "Canont get Address!"+total);
+            estimated_fare.setText(String.valueOf(df.format(total)) + "$");
+            Log.wtf("123", "Canont get Address!" + total);
 
             Button request_uber_btn = layout.findViewById(R.id.request_uber_btn);
 
@@ -798,19 +807,19 @@ placeAutoComplete.setHint("Where to?");
                 @Override
                 public void onClick(View v) {
                     final ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-                    Log.wtf("123", "apiservice"+apiService.toString());
+                    Log.wtf("123", "apiservice" + apiService.toString());
 
-                    Call<TripRequest> call =  apiService.createTripRequest(new TripRequestData(pickUpAddress, destination, distance_value));
-                    Log.wtf("123", "call"+call.request().toString());
+                    Call<TripRequest> call = apiService.createTripRequest(new TripRequestData(pickUpAddress, destination, distance_value));
+                    Log.wtf("123", "call" + call.request().toString());
                     call.enqueue(new Callback<TripRequest>() {
                         @Override
                         public void onResponse(Call<TripRequest> call, Response<TripRequest> response) {
-                            Log.wtf("123", "response"+new Gson().toJson(response.body()));
-                            int msg =  response.code();
-                            Log.wtf("123", "message"+msg);
+                            Log.wtf("123", "response" + new Gson().toJson(response.body()));
+                            int msg = response.code();
+                            Log.wtf("123", "message" + msg);
                             if (response.isSuccessful()) {
                                 Long tripRequest_id = response.body().getId();
-                                Log.wtf("123", "tripid"+tripRequest_id);
+                                Log.wtf("123", "tripid" + tripRequest_id);
                                 Call<Long> call2 = apiService.getNotification(tripRequest_id);
                                 call2.enqueue(new Callback<Long>() {
                                     @Override
@@ -879,7 +888,7 @@ placeAutoComplete.setHint("Where to?");
             String registrationPlate = bundle.getString("data6");
             Log.wtf("firstName", "Got message: " + firstName);
             Log.wtf("tripRequestId", "Got message: " + tripRequestId);
-            Toast.makeText(RiderMapActivity.this,"I receive the notification",Toast.LENGTH_LONG).show();
+            Toast.makeText(RiderMapActivity.this, "I receive the notification", Toast.LENGTH_LONG).show();
             initiateDriverInfoPopupWindow(firstName, lastName, manufacturer, model, registrationPlate, tripRequestId);
         }
     };
@@ -891,7 +900,7 @@ placeAutoComplete.setHint("Where to?");
 
             // Get extra data included in the Intent
             Bundle bundle = intent.getExtras();
-            String body =  bundle.getString("data1");
+            String body = bundle.getString("data1");
 
             //Alert box to inform rider that the driver has arrived
             new AlertDialog.Builder(RiderMapActivity.this)
@@ -923,7 +932,7 @@ placeAutoComplete.setHint("Where to?");
 
             // Get extra data included in the Intent
             Bundle bundle = intent.getExtras();
-            String body =  bundle.getString("data1");
+            String body = bundle.getString("data1");
 
             //Alert box to inform rider that the driver has arrived
             new AlertDialog.Builder(RiderMapActivity.this)
@@ -957,7 +966,7 @@ placeAutoComplete.setHint("Where to?");
             Long tripId = bundle.getLong("tripId");
 
             Log.wtf("tripId", "Got message: " + tripId);
-            Toast.makeText(RiderMapActivity.this,"End Trip notification",Toast.LENGTH_LONG).show();
+            Toast.makeText(RiderMapActivity.this, "End Trip notification", Toast.LENGTH_LONG).show();
 
             Intent intent1 = new Intent(RiderMapActivity.this, RiderFareActivity.class);
             intent1.putExtra("tripId", tripId);
@@ -976,13 +985,14 @@ placeAutoComplete.setHint("Where to?");
         super.onDestroy();
     }
 
+    // Pop Up Window with driver's information | Call | Chat | Cancel buttons
     private void initiateDriverInfoPopupWindow(String firstName, String lastName, String manufacturer, String model, String registartionPlate, final Long tripRequestId) {
         //Invisibile AutoCompleteView search tab
         placeAutoComplete.getView().setVisibility(View.GONE);
 
         LayoutInflater inflater = LayoutInflater.from(this);
         //Inflate the view from a predefined XML layout
-        View layout = inflater.inflate(R.layout.pop_up_trip_rider,null);
+        View layout = inflater.inflate(R.layout.pop_up_trip_rider, null);
 
         relativeLayout = layout.findViewById(R.id.pop_up_window);
         // create a PopupWindow
@@ -992,13 +1002,14 @@ placeAutoComplete.setHint("Where to?");
         name_txt = layout.findViewById(R.id.name);
         car_details_txt = layout.findViewById(R.id.car_details);
         name_txt.setText(firstName + " " + lastName);
-        car_details_txt.setText(manufacturer+" "+model);
+        car_details_txt.setText(manufacturer + " " + model);
 
         chat_btn = layout.findViewById(R.id.chat_btn);
         chat_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(RiderMapActivity.this, ChatActivity.class);
+                intent.putExtra("tripRequestId", tripRequestId);
                 startActivity(intent);
             }
         });
@@ -1008,7 +1019,7 @@ placeAutoComplete.setHint("Where to?");
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("6972119950" ));
+                intent.setData(Uri.parse("6972119950"));
                 startActivity(intent);
             }
         });
@@ -1017,7 +1028,7 @@ placeAutoComplete.setHint("Where to?");
         cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.wtf("123", "TRIPREQUESTID"+tripRequestId);
+                Log.wtf("123", "TRIPREQUESTID" + tripRequestId);
                 //TODO alertbox or not? is tripid necessary for notification?
                 sendCancelRequestNotification(tripRequestId);
                 cancelTripRequest(tripRequestId);
@@ -1031,20 +1042,20 @@ placeAutoComplete.setHint("Where to?");
 
     private void cancelTripRequest(Long tripRequestId) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-        Log.wtf("123", "apiservice"+apiService.toString());
+        Log.wtf("123", "apiservice" + apiService.toString());
 
-        Call<TripRequest> call =  apiService.cancelTripRequest(tripRequestId);
-        Log.wtf("123", "call"+call.toString());
+        Call<TripRequest> call = apiService.cancelTripRequest(tripRequestId);
+        Log.wtf("123", "call" + call.toString());
         call.enqueue(new Callback<TripRequest>() {
             @Override
             public void onResponse(Call<TripRequest> call, Response<TripRequest> response) {
-                Log.wtf("123", "response"+new Gson().toJson(response.body()));
+                Log.wtf("123", "response" + new Gson().toJson(response.body()));
 
-                int msg =  response.code();
-                Log.wtf("123", "message"+msg);
+                int msg = response.code();
+                Log.wtf("123", "message" + msg);
 
                 if (response.isSuccessful()) {
-                    Log.wtf("123", "response"+response.body().toString());
+                    Log.wtf("123", "response" + response.body().toString());
                     Log.wtf("123", "post submitted to API." + response.body().toString());
                     //TODO check if its ok
                     pw.dismiss();
@@ -1066,12 +1077,11 @@ placeAutoComplete.setHint("Where to?");
     // Send an Intent with an action named "cancel"
     private void sendCancelRequestNotification(Long tripRequestId) {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
-
         Call<Long> call = apiService.getRiderCancelRequestNotification(tripRequestId);
         call.enqueue(new Callback<Long>() {
             @Override
             public void onResponse(Call<Long> call, Response<Long> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.wtf("123", "Got notification:Driver cancel");
                 }
             }
@@ -1082,7 +1092,6 @@ placeAutoComplete.setHint("Where to?");
             }
         });
     }
-
 
 
     private List<LatLng> decodePoly(String encoded) {
@@ -1133,4 +1142,54 @@ placeAutoComplete.setHint("Where to?");
         return -1;
     }
 
+    public void displayDriversOnMap(List<Driver> drivers, double userLatitude, double userLongitude) {
+        for (Driver driver : drivers) {
+            double driverLatitude = driver.getLatitude();
+            double driverLongitude = driver.getLongitude();
+            double distance = distanceBetween(userLatitude, userLongitude, driverLatitude, driverLongitude);
+            if (distance <= 5) {
+                LatLng driverLocation = new LatLng(driverLatitude, driverLongitude);
+                MarkerOptions markerOptions = new MarkerOptions().position(driverLocation).title(driver.getUser().getFirstName());
+                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_car));
+                mMap.addMarker(markerOptions);
+                Log.wtf("123", "DISTANCE" + distance);
+            }
+        }
+    }
+
+    private static double distanceBetween(double lat1, double lng1, double lat2, double lng2) {
+        // Haversine formula to calculate distance
+        double earthRadius = 6371; // kilometers
+        double dLat = Math.toRadians(lat2 - lat1);
+        double dLng = Math.toRadians(lng2 - lng1);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double dist = (earthRadius * c);
+        Log.wtf("123", "Distance is : " + dist);
+        return dist;
+    }
+
+    public List<Driver> getAllAvailableDrivers() {
+        List<Driver> drivers = new ArrayList<>();
+        ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Call<List<Driver>> call = apiService.getActiveDrivers(true);
+        call.enqueue(new Callback<List<Driver>>() {
+            @Override
+            public void onResponse(Call<List<Driver>> call, Response<List<Driver>> response) {
+                if (response.isSuccessful()) {
+                    List<Driver> drivers = response.body();
+                    Log.wtf("123", "Find All Active Drivers");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Driver>> call, Throwable t) {
+                Log.d("123", "Unable to submit post to API. NO DRIVERS RETURNED");
+                t.printStackTrace();
+            }
+        });
+        return drivers;
+    }
 }

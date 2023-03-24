@@ -21,6 +21,22 @@
             <item name="android:textSize">30sp</item>
         </style>
 
+    <style name="prefix">
+        <item name="android:textSize">40px</item>
+    </style>
+
+    <style name="button_spinner" parent="@android:style/Widget.Spinner">
+    </style>
+
+    <style name="DialogSpinner">
+        <item name="android:textColor">#919090</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">2px</item>
+        <item name="android:layout_marginBottom">2px</item>
+    </style>
+
+
 
 
 </resources>

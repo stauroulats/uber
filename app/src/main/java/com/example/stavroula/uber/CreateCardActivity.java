@@ -1,10 +1,16 @@
 package com.example.stavroula.uber;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +29,10 @@ public class CreateCardActivity extends MainActivity {
 
     TextInputLayout til_card_number, til_cardholder_name, til_cvv, til_year, til_month;
     TextInputEditText edt_card_number, edt_cardholder_name, edt_cvv, edt_year, edt_month;
-    Button save_btn;
+    Button save_btn, month_button;
+    Spinner month_spinner;
+
+    final Context context = this;
 
     ImageButton return_back_btn;
 
@@ -48,7 +57,34 @@ public class CreateCardActivity extends MainActivity {
         edt_year =  findViewById(R.id.edt_year);
         edt_month =  findViewById(R.id.edt_month);
 
+        month_button = findViewById(R.id.month_button);
+
         mResponse = findViewById(R.id.mresponse);
+
+        String[] items = new String[] {"1", "2", "3", "4"};
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, items);
+
+        final EditText input = new EditText(this) ;
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        month_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                     new AlertDialog.Builder(context).setTitle("Months").setAdapter(adapter, new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialogInterface, int i) {
+                             String selected_month = input.getText().toString();
+                             month_button.setText(selected_month);
+                             dialogInterface.dismiss();
+                         }
+                     }).create().show();
+            }
+        });
+
+
+
 
         //Return previous activity button
         return_back_btn =  findViewById(R.id.return_button);
@@ -61,6 +97,7 @@ public class CreateCardActivity extends MainActivity {
 
         save_btn = findViewById(R.id.save_btn);
 
+
         save_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,15 +109,15 @@ public class CreateCardActivity extends MainActivity {
                 Log.wtf("123", "cvv"+cvv);
                 Integer year = Integer.parseInt(edt_year.getText().toString());
                 Log.wtf("123", "year"+year);
-                Integer month = Integer.parseInt(edt_month.getText().toString());
-                Log.wtf("123", "month"+month);
+                //Integer month = Integer.parseInt(edt_month.getText().toString());
+               // Log.wtf("123", "month"+month);
 
                 CreditCard creditCard = new CreditCard();
                 creditCard.setNumber(card_number);
                 creditCard.setName(cardholder_name);
                 creditCard.setCvv(cvv);
                 creditCard.setYear(year);
-                creditCard.setMonth(month);
+                //creditCard.setMonth(month);
                 Log.wtf("123", "card"+creditCard.getName()+creditCard.getCvv()+creditCard.getNumber()+creditCard.getMonth()+creditCard.getYear());
                 createCreditCard(creditCard);
             }

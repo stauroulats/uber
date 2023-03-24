@@ -82,8 +82,8 @@ public interface ApiService {
         @GET("/requests/{tripRequestId}")
         Call<TripRequest> getTripRequest(@Path("tripRequestId") Long id);
 
-        @POST("/drivers/7/acceptRequest/{tripRequestId}")
-        Call<TripRequest> acceptRequest(@Path("tripRequestId") Long id);
+        @POST("/drivers/7/acceptRequest/{tripRequestId}/{chatRoomId}")
+        Call<TripRequest> acceptRequest(@Path("tripRequestId") Long id, @Path("chatRoomId") String chatroomId);
 
         @POST("/drivers/8/cancelRequest/{tripRequestId}")
         Call<TripRequest> cancelRequest(@Path("tripRequestId") Long id);
@@ -117,7 +117,6 @@ public interface ApiService {
         Call<Long> getPaymentNotification();
 
         @POST("/riders/5/request")
-        @Headers({ "Content-Type: application/json;charset=UTF-8"})
         Call<TripRequest> createTripRequest(@Body TripRequestData tripRequestData);
 
         @POST("/drivers/8/acceptRequest/{tripRequestId}/startTrip")
@@ -129,10 +128,13 @@ public interface ApiService {
         @POST("/drivers/7/updateStatus/{isActive}")
         Call<Boolean> updateDriverStatus (@Path("isActive") boolean status);
 
+        @POST("/drivers/7/updateLocation/{latitude}/{longitude}")
+        Call<String> updateLocation (@Path("latitude") double latidute, @Path("longitude")double longitude);
+
         @Multipart
         @POST("/users/{userId}/photo/{1}")
         Call<Photo> uploadPhoto(@Part MultipartBody.Part photo);
 
-        @GET("/drivers/activeDrivers{status}")
+        @GET("/drivers/activeDrivers/{status}")
         Call<List<Driver>> getActiveDrivers(@Path("status") boolean status);
     }

@@ -18,12 +18,12 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -46,11 +46,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.stavroula.uber.entity.Car;
 import com.example.stavroula.uber.entity.Driver;
-import com.example.stavroula.uber.entity.Trip;
 import com.example.stavroula.uber.entity.TripRequest;
 import com.example.stavroula.uber.network.RetrofitClient;
 import com.example.stavroula.uber.service.ApiService;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -140,9 +142,13 @@ public class WelcomeDriverActivity extends AppCompatActivity
 
     ImageView rider_img;
     TextView riderName_txt, rating_txt;
-    Button call_btn, message_btn, cancel_btn, start_trip_btn;
+    Button call_btn, chat_btn, cancel_btn, start_trip_btn;
 
     Dialog dialog;
+
+    private FusedLocationProviderClient mFusedLocationClient; // Object used to receive location updates
+
+    private LocationRequest locationRequest; // Object that defines important parameters regarding location request.
 
     private final String TOPIC = "tripRequest";
     private final String TRIPTOPIC = "trip";
@@ -159,6 +165,17 @@ public class WelcomeDriverActivity extends AppCompatActivity
             mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             mCameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
         }
+
+        // Construct a FusedLocationProviderClient. New add on
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setInterval(5000); // 5 second delay between each request
+        locationRequest.setFastestInterval(5000); // 5 seconds fastest time in between each request
+        locationRequest.setSmallestDisplacement(10); // 10 meters minimum displacement for new location request
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY); // enables GPS high accuracy location requests
+
+        sendUpdatedLocation();
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -184,7 +201,17 @@ public class WelcomeDriverActivity extends AppCompatActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    FirebaseMessaging.getInstance().subscribeToTopic(TOPIC);
+                    FirebaseMessaging.getInstance().subscribeToTopic(TOPIC).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            String msg = "Subscribed";
+                            if (!task.isSuccessful()) {
+                                msg = "Subscribe failed";
+                            }
+                            Log.d("123", msg);
+                            Toast.makeText(WelcomeDriverActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     Driver driver = new Driver();
                     driver.setActive(true);
                     updateStatus(true);
@@ -228,10 +255,53 @@ public class WelcomeDriverActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<List<Car>> call, Throwable t) {
                 Log.d("123", "Unable to submit post to API.");
+
             }
         });
 
 
+    }
+
+    private void sendUpdatedLocation() {
+        try {
+            mFusedLocationClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+                @Override
+                public void onLocationResult(LocationResult locationResult) {
+                    Location location = locationResult.getLastLocation();
+                    double latitude = location.getLatitude();
+                    double longitude = location.getLongitude();
+                    String latitudeField = (String.valueOf(latitude));
+                    String longitudeField = (String.valueOf(longitude));
+                    //String locationToParse = String.valueOf(latitudeField);
+                    Log.d("123", "LOCATION" + latitudeField);
+                    Log.d("123", "LOCATION" + longitudeField);
+                    //Update Driver's location
+                    ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+                    Log.d("123", "apiservice" + apiService.toString());
+                    Call<String> call = apiService.updateLocation(latitude,longitude);
+                    Log.d("123", "call" + call.toString());
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            Log.wtf("123", "response" + new Gson().toJson(response.body()));
+                            int msg = response.code();
+                            Log.d("123", "message" + msg);
+                            if (response.isSuccessful()) {
+                                int statusCode = response.code();
+                                Log.d("123", "response" + response.body().toString());
+                                Log.d("123", "post submitted to API." + response.body().toString());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Log.d("123", "Unable to submit post to API.");
+                        }
+                    });
+                }
+            }, Looper.myLooper());
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -463,7 +533,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
                                         });
                                         valueAnimator.start();
                                         handler.postDelayed(this, 3000);
-                                        if (index == (polyLineList.size()-1)) {
+                                  /*      if (index == (polyLineList.size()-1)) {
                                             valueAnimator.removeAllUpdateListeners();
                                             Log.wtf("123", "end route");
                                             handler.removeCallbacksAndMessages(null);
@@ -516,7 +586,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
 
                                             dialog.show();
                                             sendArrivalMessage();
-                                        }
+                                        } */
                                     }
 
 
@@ -642,9 +712,39 @@ public class WelcomeDriverActivity extends AppCompatActivity
                                     new LatLng(mLastKnownLocation.getLatitude(),
                                             mLastKnownLocation.getLongitude()), DEFAULT_ZOOM));
                             LatLng latLng = new LatLng(mLastKnownLocation.getLatitude(),mLastKnownLocation.getLongitude());
+                            double latidute = mLastKnownLocation.getLatitude();
+                            double longitude = mLastKnownLocation.getLongitude();
                             /*Marker car icon*/
                            startPositionMarker = mMap.addMarker(new MarkerOptions().position(new LatLng(mLastKnownLocation.getLatitude(),
                                     mLastKnownLocation.getLongitude())).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                           String latLngToParse = String.valueOf(latLng);
+                            Log.d("123", "latLNG" + latLngToParse);
+                            //Update Driver's location
+                            ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+                            Log.d("123", "apiservice" + apiService.toString());
+
+                            Call<String> call = apiService.updateLocation(latidute, longitude);
+                            Log.d("123", "call" + call.toString());
+                            call.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Log.wtf("123", "response" + new Gson().toJson(response.body()));
+
+                                    int msg = response.code();
+                                    Log.d("123", "message" + msg);
+
+                                    if (response.isSuccessful()) {
+
+                                        int statusCode = response.code();
+                                        Log.d("123", "response" + response.body().toString());
+                                        Log.d("123", "post submitted to API." + response.body().toString());
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Log.d("123", "Unable to submit post to API.");
+                                }
+                            });
 
                             // Adding new item to the ArrayList
                             markerPoints.add(latLng);
@@ -871,7 +971,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
         });
     }
 
-
+// Pop Up Window with rider's information | Call | Chat | Cancel buttons
     private void initiateRiderInfoPopupWindow(String riderName, String rating, final Long tripRequestId) {
         LayoutInflater inflater = LayoutInflater.from(this);
         //Inflate the view from a predefined XML layout
@@ -886,6 +986,16 @@ public class WelcomeDriverActivity extends AppCompatActivity
         rating_txt = layout.findViewById(R.id.rating);
         riderName_txt.setText(riderName);
         rating_txt.setText(rating);
+
+        chat_btn = layout.findViewById(R.id.chat_btn);
+        chat_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WelcomeDriverActivity.this, ChatActivity.class);
+                intent.putExtra("tripRequestId",tripRequestId);
+                startActivity(intent);
+            }
+        });
 
         call_btn = layout.findViewById(R.id.call_btn);
         call_btn.setOnClickListener(new View.OnClickListener() {
@@ -1044,6 +1154,7 @@ public class WelcomeDriverActivity extends AppCompatActivity
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.d("123", "Unable to submit post to API.");
+                t.printStackTrace();
             }
         });
 

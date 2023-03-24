@@ -87,6 +87,7 @@
                         android:id="@+id/edt_year"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxLength="4"
                         android:hint="@string/year"
                         android:inputType="number"/>
 
@@ -129,7 +130,7 @@
                     android:layout_marginTop="60dp"
                     android:background="@drawable/button_submit"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="@string/sign_up"
+                    android:text="@string/create_car"
                     android:textAlignment="center"
                     android:textColor="@color/light_blue"
                     android:textSize="14sp"
@@ -142,19 +143,6 @@
                     android:visibility = "gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
-
-                <Button
-                    android:id="@+id/need_an_account_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="60dp"
-                    android:background="@color/light_blue"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@string/need_an_account"
-                    android:textAlignment="center"
-                    android:textColor="@color/blue_black"
-                    android:textSize="14sp"
-                    />
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

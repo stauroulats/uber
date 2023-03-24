@@ -1,5 +1,6 @@
 package com.example.stavroula.uber;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +26,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -56,7 +60,6 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         back_btn = findViewById(R.id.return_button);
         send_btn = findViewById(R.id.send_btn);
-        name = findViewById(R.id.name);
         til_message = findViewById(R.id.til_message);
         edt_message = findViewById(R.id.edt_message);
 
@@ -68,6 +71,13 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayout);
 
+        Intent i = getIntent();
+        Bundle extras = i.getExtras();
+
+       //if(extras.containsKey("tripRequestId")) {
+            final Long tripRequestId = i.getExtras().getLong("tripRequestId");
+            Log.wtf("123", "TRIPREQUESTID"+tripRequestId);
+       // }
 
 
 
@@ -78,42 +88,48 @@ public class ChatActivity extends AppCompatActivity {
                 if (!message.equals("")){
                     Log.wtf("123", "TRIPID"+message);
 
-                    sendMessage(a,b,message);
+                    sendMessage(a,b,message,tripRequestId);
                 }
                 edt_message.setText("");
             }
         });
 
-        readmessage();
+        String trip_request_id = tripRequestId.toString();
+
+        readmessage(trip_request_id);
+
+
 
         dbreference = FirebaseDatabase.getInstance().getReference();
 
         dbreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
         fbuser = FirebaseAuth.getInstance().getCurrentUser();
     }
 
-    private void sendMessage(String sender, String receiver, String message){
+    private void sendMessage(String sender, String receiver, String message, Long tripRequestId){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         Log.wtf("123", "TRIPID"+reference);
 
-        String time = String.valueOf(System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        Date currentTime = calendar.getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timeString = simpleDateFormat.format(currentTime);
+       //String time = String.valueOf(System.currentTimeMillis());
 
         HashMap<String,Object> hashmap = new HashMap<> ();
         hashmap.put("sender",sender);
         hashmap.put("receiver",receiver);
         hashmap.put("message", message);
-        hashmap.put("time",time);
+        hashmap.put("time",timeString);
 
 
        /* // read the index key
@@ -121,18 +137,23 @@ public class ChatActivity extends AppCompatActivity {
         Log.wtf("123", "KEY"+chatId);
         // create a child with index value
         reference.child(chatId).setValue(hashmap);
-
-        Log.wtf("123", "2 KEY"+reference.child("Chats").getKey() );
 */
-        reference.child("Chats").push().setValue(hashmap);
-        reference.child("Chats").getKey();
-        Log.wtf("123", "KEY"+reference.child("Chats").getKey() );
+        //TODO If chatiD!=Null,
+        String trip_request_id = tripRequestId.toString();
+        reference.child("Chats").child(trip_request_id).push().setValue(hashmap);
+
+
+       /* String refUi = ref.getKey();
+       Log.wtf("123", "KEY"+refUi );
+       Map<String, Object> childUpdates = new HashMap<>();
+       childUpdates.put(trip_request_id + refUi, hashmap);
+       reference.updateChildren(childUpdates);*/
     }
 
-    private void readmessage(){
+    private void readmessage(String tripRequestId){
         chatarray = new ArrayList<>();
 
-        dbreference = FirebaseDatabase.getInstance().getReference("Chats");
+        dbreference = FirebaseDatabase.getInstance().getReference("Chats").child(tripRequestId);
         dbreference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -151,7 +172,6 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

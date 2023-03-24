@@ -38,6 +38,17 @@ import com.google.gson.annotations.SerializedName;
         @SerializedName("driver")
         @Expose
         private Object driver;
+        @SerializedName("firebase_token")
+        @Expose
+        private String firebase_token;
+
+        public String getFirebase_token() {
+            return firebase_token;
+        }
+
+        public void setFirebase_token(String firebase_token) {
+            this.firebase_token = firebase_token;
+        }
 
         public Integer getId() {
             return id;
